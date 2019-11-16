@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Map from "./elements/Map";
+import FileDrop from "react-file-drop";
 
 const App = () => {
   const [viewPort, setViewPort] = useState({
@@ -13,56 +14,35 @@ const App = () => {
     longitude: 78.962883
   });
 
-  const geojson = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        geometry: { type: "Point", coordinates: [102.0, 0.5] },
-        properties: { prop0: "value0" }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "LineString",
-          coordinates: [
-            [102.0, 0.0],
-            [103.0, 1.0],
-            [104.0, 0.0],
-            [105.0, 1.0]
-          ]
-        },
-        properties: {
-          prop0: "value0",
-          prop1: 0.0
-        }
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: [
-            [
-              [100.0, 0.0],
-              [101.0, 0.0],
-              [101.0, 1.0],
-              [100.0, 1.0],
-              [100.0, 0.0]
-            ]
-          ]
-        },
-        properties: {
-          prop0: "value0",
-          prop1: { this: "that" }
-        }
-      }
-    ]
+  const [geojson, setgeojson] = useState(null);
+  let fileReader = new FileReader();
+
+  const onFileDrop = (files, event) => {
+    console.log({ files, event });
+    fileReader.onloadend = _ => {
+      let json = fileReader.result;
+      json = JSON.parse(json);
+      setgeojson(json);
+    };
+    fileReader.readAsText(files[0]);
   };
 
   return (
     <div className="ui grid">
       <div className="two column row">
-        <div className="four wide column">controls</div>
+        <div className="four wide column">
+          <div
+            style={{
+              padding: 20,
+              margin: 40,
+              border: "1px solid red",
+              textAlign: "center",
+              cursor: ""
+            }}
+          >
+            <FileDrop onDrop={onFileDrop}>Drop geojson file here</FileDrop>
+          </div>
+        </div>
         <div className="twelve wide column">
           <Map
             viewPort={viewPort}

@@ -9,16 +9,11 @@ const Map = ({ geojson, viewPort, setViewPort }) => {
       onViewportChange={setViewPort}
       mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
     >
-      <Source id="my-data" type="geojson" data={geojson}>
-        <Layer
-          id="point"
-          type="circle"
-          paint={{
-            "circle-radius": 10,
-            "circle-color": "#007cbf"
-          }}
-        />
-      </Source>
+      {geojson ? (
+        <Source id="my-data" type="geojson" data={geojson}>
+          <Layer id="point" type="line" />
+        </Source>
+      ) : null}
     </ReactMapGL>
   );
 };
