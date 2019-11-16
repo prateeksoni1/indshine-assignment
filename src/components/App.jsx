@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Map from "./elements/Map";
-import FileDrop from "react-file-drop";
+import Dragger from "./elements/Dragger";
+import ReactJSONView from "react-json-view";
 
 const App = () => {
   const [viewPort, setViewPort] = useState({
@@ -15,33 +16,31 @@ const App = () => {
   });
 
   const [geojson, setgeojson] = useState(null);
-  let fileReader = new FileReader();
 
-  const onFileDrop = (files, event) => {
-    console.log({ files, event });
-    fileReader.onloadend = _ => {
-      let json = fileReader.result;
-      json = JSON.parse(json);
-      setgeojson(json);
-    };
-    fileReader.readAsText(files[0]);
-  };
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <div className="ui grid">
       <div className="two column row">
         <div className="four wide column">
-          <div
-            style={{
-              padding: 20,
-              margin: 40,
-              border: "1px solid red",
-              textAlign: "center",
-              cursor: ""
-            }}
-          >
-            <FileDrop onDrop={onFileDrop}>Drop geojson file here</FileDrop>
-          </div>
+          <Dragger setgeojson={setgeojson} />
+          {geojson && (
+            <div className="ui styled fluid accordion">
+              <div
+                className={isVisible ? "title active" : "title"}
+                onClick={() => setIsVisible(!isVisible)}
+              >
+                <i className="dropdown icon"></i>
+                View GeoJSON
+              </div>
+              <div className={isVisible ? "content active" : "content"}>
+                <ReactJSONView
+                  src={geojson}
+                  onEdit={e => setgeojson(e.updated_src)}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <div className="twelve wide column">
           <Map
