@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from "react";
-import ReactMapGL, { Source, Layer } from "react-map-gl";
-import { MAPBOX_ACCESS_TOKEN } from "../config";
+import React, { useState } from "react";
+import Map from "./elements/Map";
 
 const App = () => {
-  const [state, setState] = useState({
-    geojson: {
-      type: "FeatureCollection",
-      features: []
-    }
-  });
-
   const [viewPort, setViewPort] = useState({
     zoom: 6.8,
     bearing: 0,
     pitch: 0,
     dragPan: true,
-    width: 600,
-    height: 600,
-    latitude: 38.8951,
-    longitude: -77.0364
+    width: "100%",
+    height: "100vh",
+    latitude: 20.593683,
+    longitude: 78.962883
   });
 
   const geojson = {
@@ -66,23 +58,20 @@ const App = () => {
       }
     ]
   };
+
   return (
-    <ReactMapGL
-      {...viewPort}
-      onViewportChange={setViewPort}
-      mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
-    >
-      <Source id="my-data" type="geojson" data={geojson}>
-        <Layer
-          id="point"
-          type="circle"
-          paint={{
-            "circle-radius": 10,
-            "circle-color": "#007cbf"
-          }}
-        />
-      </Source>
-    </ReactMapGL>
+    <div className="ui grid">
+      <div className="two column row">
+        <div className="four wide column">controls</div>
+        <div className="twelve wide column">
+          <Map
+            viewPort={viewPort}
+            setViewPort={setViewPort}
+            geojson={geojson}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
