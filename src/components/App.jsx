@@ -15,7 +15,10 @@ const App = () => {
     longitude: 78.962883
   });
 
-  const [geojson, setgeojson] = useState(null);
+  const [geojson, setgeojson] = useState({
+    type: "FeatureCollection",
+    features: []
+  });
 
   const [isVisible, setIsVisible] = useState(false);
 
