@@ -47,6 +47,7 @@ const App = () => {
             viewPort={viewPort}
             setViewPort={setViewPort}
             geojson={geojson}
+            setgeojson={setgeojson}
           />
         </div>
       </div>

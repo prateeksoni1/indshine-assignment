@@ -1,20 +1,32 @@
 import React from "react";
-import ReactMapGL, { Source, Layer } from "react-map-gl";
+import { StaticMap } from "react-map-gl";
+import DeckGL from "@deck.gl/react";
+import { EditableGeoJsonLayer } from "nebula.gl";
 import { MAPBOX_ACCESS_TOKEN } from "../../config";
 
-const Map = ({ geojson, viewPort, setViewPort }) => {
+const Map = ({ geojson, viewPort, setViewPort, setgeojson }) => {
+  let selectedFeatureIndexes = [];
+
+  const layer = new EditableGeoJsonLayer({
+    id: "geojson-layer",
+    data: geojson,
+    selectedFeatureIndexes,
+    initialViewState: { latitude: 20.593683, longitude: 78.962883 },
+    onEdit: ({ updatedData }) => {
+      setgeojson(updatedData);
+    }
+  });
+
   return (
-    <ReactMapGL
-      {...viewPort}
-      onViewportChange={setViewPort}
-      mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
+    <DeckGL
+      viewState={viewPort}
+      height={800}
+      controller={true}
+      layers={[layer]}
+      onViewStateChange={v => setViewPort(v.viewState)}
     >
-      {geojson ? (
-        <Source id="my-data" type="geojson" data={geojson}>
-          <Layer id="point" type="line" />
-        </Source>
-      ) : null}
-    </ReactMapGL>
+      <StaticMap {...viewPort} mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN} />
+    </DeckGL>
   );
 };
 
