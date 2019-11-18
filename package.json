@@ -10,7 +10,8 @@
     "react-file-drop": "^0.2.8",
     "react-json-view": "^1.19.1",
     "react-map-gl": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "semantic-ui-react": "^0.88.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -20,7 +20,7 @@ const Map = ({ geojson, viewPort, setViewPort, setgeojson }) => {
   return (
     <DeckGL
       viewState={viewPort}
-      height={800}
+      height={"100vh"}
       controller={true}
       layers={[layer]}
       onViewStateChange={v => setViewPort(v.viewState)}

@@ -1,5 +1,6 @@
 import React from "react";
 import FileDrop from "react-file-drop";
+import { Button, Icon } from "semantic-ui-react";
 
 const Dragger = ({ setgeojson }) => {
   let fileReader = new FileReader();
@@ -15,18 +16,20 @@ const Dragger = ({ setgeojson }) => {
   };
 
   return (
-    <FileDrop onDrop={onFileDrop}>
-      <div
-        style={{
-          padding: 20,
-          margin: "40px 40px 0px 40px",
-          border: "1px solid red",
-          textAlign: "center"
-        }}
-      >
-        Drop geojson file here
-      </div>
-    </FileDrop>
+    <>
+      <FileDrop onDrop={onFileDrop}>
+        <Button
+          icon
+          color="google plus"
+          size="medium"
+          fluid
+          labelPosition="left"
+        >
+          <Icon name="code" />
+          Drop GeoJSON here
+        </Button>
+      </FileDrop>
+    </>
   );
 };
 

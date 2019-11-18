@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Map from "./elements/Map";
 import Dragger from "./elements/Dragger";
 import ReactJSONView from "react-json-view";
+import { Grid, GridRow, GridColumn, Icon, Accordion } from "semantic-ui-react";
 
 const App = () => {
   const [viewPort, setViewPort] = useState({
@@ -9,8 +10,6 @@ const App = () => {
     bearing: 0,
     pitch: 0,
     dragPan: true,
-    width: "100%",
-    height: "100vh",
     latitude: 20.593683,
     longitude: 78.962883
   });
@@ -20,41 +19,45 @@ const App = () => {
     features: []
   });
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [active, setActive] = useState(false);
 
   return (
-    <div className="ui grid">
-      <div className="two column row">
-        <div className="four wide column">
-          <Dragger setgeojson={setgeojson} />
-          {geojson && (
-            <div className="ui styled fluid accordion">
-              <div
-                className={isVisible ? "title active" : "title"}
-                onClick={() => setIsVisible(!isVisible)}
-              >
-                <i className="dropdown icon"></i>
-                View GeoJSON
-              </div>
-              <div className={isVisible ? "content active" : "content"}>
-                <ReactJSONView
-                  src={geojson}
-                  onEdit={e => setgeojson(e.updated_src)}
-                />
-              </div>
+    <>
+      <Grid>
+        <GridRow style={{ padding: "10px" }}>
+          <GridColumn width="4" style={{ paddingTop: "15px" }}>
+            <div>
+              <Dragger setgeojson={setgeojson} />
             </div>
-          )}
-        </div>
-        <div className="twelve wide column">
-          <Map
-            viewPort={viewPort}
-            setViewPort={setViewPort}
-            geojson={geojson}
-            setgeojson={setgeojson}
-          />
-        </div>
-      </div>
-    </div>
+            {geojson && (
+              <Accordion fluid>
+                <Accordion.Title
+                  active={active}
+                  onClick={() => setActive(!active)}
+                >
+                  <Icon name="dropdown" />
+                  View GeoJSON
+                </Accordion.Title>
+                <Accordion.Content active={active}>
+                  <ReactJSONView
+                    src={geojson}
+                    onEdit={e => setgeojson(e.updated_src)}
+                  />
+                </Accordion.Content>
+              </Accordion>
+            )}
+          </GridColumn>
+          <GridColumn width="12" style={{ paddingTop: "15px" }}>
+            <Map
+              viewPort={viewPort}
+              setViewPort={setViewPort}
+              geojson={geojson}
+              setgeojson={setgeojson}
+            />
+          </GridColumn>
+        </GridRow>
+      </Grid>
+    </>
   );
 };
 
