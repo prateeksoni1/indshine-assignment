@@ -9,6 +9,7 @@ const PropertyPanel = ({ properties, setProperties }) => {
       if (name === "fillColor") opacity = 100;
       value = convertHex(value, opacity);
     }
+    if (name === "width") value = parseInt(value);
     setProperties({ ...properties, [name]: value });
   };
 
@@ -30,6 +31,12 @@ const PropertyPanel = ({ properties, setProperties }) => {
                 onChange={handleChange}
                 fluid
               />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Field inline width={8}>
+              <label>Line Width</label>
+              <Input name="width" type="number" onChange={handleChange} fluid />
             </Form.Field>
           </Form.Group>
         </Form>

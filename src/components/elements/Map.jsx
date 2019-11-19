@@ -29,7 +29,7 @@ const Map = props => {
       };
     });
     setgeojson(newData);
-  });
+  }, [properties, selectedFeatureIndexes, geojson, setgeojson]);
 
   const getMode = () => {
     switch (mode) {
@@ -57,6 +57,7 @@ const Map = props => {
       d.properties.color ? d.properties.color : [0, 0, 0, 255],
     getFillColor: d =>
       d.properties.fillColor ? d.properties.fillColor : [0, 0, 0, 100],
+    getLineWidth: d => (d.properties.width ? d.properties.width : 1),
     selectedFeatureIndexes,
     initialViewState: { latitude: 20.593683, longitude: 78.962883 },
 
