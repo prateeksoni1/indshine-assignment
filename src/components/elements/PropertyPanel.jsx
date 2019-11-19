@@ -4,8 +4,10 @@ import { convertHex } from "../../utils";
 
 const PropertyPanel = ({ properties, setProperties }) => {
   const handleChange = (_, { name, value }) => {
-    if (name === "color") {
-      value = convertHex(value);
+    let opacity = 255;
+    if (name === "color" || name === "fillColor") {
+      if (name === "fillColor") opacity = 100;
+      value = convertHex(value, opacity);
     }
     setProperties({ ...properties, [name]: value });
   };
@@ -13,11 +15,23 @@ const PropertyPanel = ({ properties, setProperties }) => {
   return (
     <Card fluid>
       <Card.Content>
-        <Form>
-          <Form.Field inline>
-            <label>Line color</label>
-            <Input name="color" type="color" onChange={handleChange} />
-          </Form.Field>
+        <Card.Header>Properties</Card.Header>
+        <Form style={{ marginTop: 10 }}>
+          <Form.Group widths="equal">
+            <Form.Field inline>
+              <label>Line color</label>
+              <Input name="color" type="color" onChange={handleChange} fluid />
+            </Form.Field>
+            <Form.Field inline>
+              <label>Fill color</label>
+              <Input
+                name="fillColor"
+                type="color"
+                onChange={handleChange}
+                fluid
+              />
+            </Form.Field>
+          </Form.Group>
         </Form>
       </Card.Content>
     </Card>
