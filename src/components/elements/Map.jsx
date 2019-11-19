@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StaticMap } from "react-map-gl";
 import DeckGL from "@deck.gl/react";
 import {
@@ -10,7 +10,26 @@ import {
 import { MAPBOX_ACCESS_TOKEN } from "../../config";
 
 const Map = props => {
-  const { geojson, viewPort, setViewPort, setgeojson, mode } = props;
+  const {
+    geojson,
+    viewPort,
+    setViewPort,
+    setgeojson,
+    mode,
+    properties
+  } = props;
+  const [selectedFeatureIndexes, setSelectedFeatureIndexes] = useState([]);
+
+  useEffect(() => {
+    const newData = geojson;
+    selectedFeatureIndexes.forEach(index => {
+      newData.features[index].properties = {
+        ...newData.features[index].properties,
+        ...properties
+      };
+    });
+    setgeojson(newData);
+  });
 
   const getMode = () => {
     switch (mode) {
@@ -25,8 +44,6 @@ const Map = props => {
     }
   };
 
-  const [selectedFeatureIndexes, setSelectedFeatureIndexes] = useState([]);
-
   const layer = new EditableGeoJsonLayer({
     id: "geojson-layer",
     data: geojson,
@@ -36,9 +53,8 @@ const Map = props => {
     },
     autoHighlight: true,
     pickable: true,
-    getLineColor: d => {
-      return d.properties.color;
-    },
+    getLineColor: d =>
+      d.properties.color ? d.properties.color : [0, 0, 0, 255],
     selectedFeatureIndexes,
     initialViewState: { latitude: 20.593683, longitude: 78.962883 },
 

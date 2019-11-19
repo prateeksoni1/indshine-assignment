@@ -1,9 +1,12 @@
 import React from "react";
 import { Card, Form, Input } from "semantic-ui-react";
+import { convertHex } from "../../utils";
 
 const PropertyPanel = ({ properties, setProperties }) => {
   const handleChange = (_, { name, value }) => {
-    console.log({ name, value });
+    if (name === "color") {
+      value = convertHex(value);
+    }
     setProperties({ ...properties, [name]: value });
   };
 
@@ -13,7 +16,7 @@ const PropertyPanel = ({ properties, setProperties }) => {
         <Form>
           <Form.Field inline>
             <label>Line color</label>
-            <Input name="getLineColor" type="color" onChange={handleChange} />
+            <Input name="color" type="color" onChange={handleChange} />
           </Form.Field>
         </Form>
       </Card.Content>
