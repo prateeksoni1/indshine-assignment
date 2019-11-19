@@ -36,6 +36,9 @@ const Map = props => {
     },
     autoHighlight: true,
     pickable: true,
+    getLineColor: d => {
+      return d.properties.color;
+    },
     selectedFeatureIndexes,
     initialViewState: { latitude: 20.593683, longitude: 78.962883 },
 
@@ -46,7 +49,16 @@ const Map = props => {
       mode === "select"
         ? info => {
             console.log(info);
-            setSelectedFeatureIndexes([...selectedFeatureIndexes, info.index]);
+            if (selectedFeatureIndexes.indexOf(info.index) !== -1) {
+              let newArray = selectedFeatureIndexes;
+              newArray = newArray.filter(item => item !== info.index);
+              setSelectedFeatureIndexes(newArray);
+            } else {
+              setSelectedFeatureIndexes([
+                ...selectedFeatureIndexes,
+                info.index
+              ]);
+            }
           }
         : null
   });

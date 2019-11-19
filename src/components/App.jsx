@@ -18,6 +18,8 @@ const App = () => {
     features: []
   });
 
+  const [properties, setProperties] = useState({});
+
   const [mode, setMode] = useState("draw");
 
   return (
@@ -29,6 +31,8 @@ const App = () => {
               geojson={geojson}
               setgeojson={setgeojson}
               setMode={setMode}
+              properties={properties}
+              setProperties={setProperties}
             />
           </GridColumn>
           <GridColumn width="12" style={{ paddingTop: "15px" }}>
@@ -38,6 +42,8 @@ const App = () => {
               geojson={geojson}
               setgeojson={setgeojson}
               mode={mode}
+              properties={properties}
+              setProperties={setProperties}
             />
           </GridColumn>
         </GridRow>

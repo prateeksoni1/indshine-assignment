@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import Dragger from "./elements/Dragger";
 import ReactJSONView from "react-json-view";
 import { Icon, Accordion, Button } from "semantic-ui-react";
+import PropertyPanel from "./elements/PropertyPanel";
 
-const LeftPane = ({ geojson, setgeojson, setMode }) => {
+const LeftPane = ({
+  geojson,
+  setgeojson,
+  setMode,
+  properties,
+  setProperties
+}) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -20,6 +27,7 @@ const LeftPane = ({ geojson, setgeojson, setMode }) => {
           <Button onClick={() => setMode("edit")}>Edit</Button>
         </Button.Group>
       </div>
+      <PropertyPanel properties={properties} setProperties={setProperties} />
       {geojson && (
         <Accordion fluid>
           <Accordion.Title active={active} onClick={() => setActive(!active)}>
