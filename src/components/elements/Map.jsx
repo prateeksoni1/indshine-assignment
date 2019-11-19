@@ -43,11 +43,10 @@ const Map = props => {
       setgeojson(updatedData);
     },
     onClick:
-      mode !== "draw"
+      mode === "select"
         ? info => {
-            const features = geojson.features;
+            console.log(info);
             setSelectedFeatureIndexes([...selectedFeatureIndexes, info.index]);
-            setgeojson({ ...geojson, features });
           }
         : null
   });
