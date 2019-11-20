@@ -50,7 +50,14 @@ const Map = props => {
     onClick:
       mode === "select"
         ? info => {
-            dispatch(setSelectedFeatures([...selectedFeatures, info.index]));
+            if (selectedFeatures.indexOf(info.index) !== -1) {
+              let newArray = selectedFeatures.filter(
+                item => item !== info.index
+              );
+              dispatch(setSelectedFeatures(newArray));
+            } else {
+              dispatch(setSelectedFeatures([...selectedFeatures, info.index]));
+            }
           }
         : null
   });
