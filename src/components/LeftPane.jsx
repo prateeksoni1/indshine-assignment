@@ -3,7 +3,7 @@ import Dragger from "./elements/Dragger";
 import ReactJSONView from "react-json-view";
 import { Icon, Accordion, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeoJSON } from "../actions";
+import { setGeoJSON, setSelectedFeatures } from "../actions";
 import PropertyPanel from "./elements/PropertyPanel";
 import area from "@turf/area";
 
