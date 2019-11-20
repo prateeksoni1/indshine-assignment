@@ -4,6 +4,7 @@ import ReactJSONView from "react-json-view";
 import { Icon, Accordion, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { setGeoJSON } from "../actions";
+import PropertyPanel from "./elements/PropertyPanel";
 
 const LeftPane = ({ setMode }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const LeftPane = ({ setMode }) => {
           <Button onClick={() => setMode("edit")}>Edit</Button>
         </Button.Group>
       </div>
+      <PropertyPanel />
       {geojson && (
         <Accordion fluid>
           <Accordion.Title active={active} onClick={() => setActive(!active)}>

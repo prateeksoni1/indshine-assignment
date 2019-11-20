@@ -6,3 +6,10 @@ export const setGeoJSON = geojson => {
     payload: geojson
   };
 };
+
+export const setSelectedFeatures = features => {
+  return {
+    type: ACTION_TYPE.SET_SELECTED_FEATURES,
+    payload: features
+  };
+};

@@ -5,7 +5,8 @@ const INITIAL_STATE = {
   geojson: {
     type: "FeatureCollection",
     features: []
-  }
+  },
+  selectedFeatures: []
 };
 
 const geojsonReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,11 @@ const geojsonReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         geojson: action.payload
+      };
+    case ACTION_TYPE.SET_SELECTED_FEATURES:
+      return {
+        ...state,
+        selectedFeatures: action.payload
       };
     default:
       return state;

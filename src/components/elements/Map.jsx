@@ -9,11 +9,14 @@ import {
 } from "nebula.gl";
 import { MAPBOX_ACCESS_TOKEN } from "../../config";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeoJSON } from "../../actions";
+import { setGeoJSON, setSelectedFeatures } from "../../actions";
 
 const Map = props => {
   const { viewPort, setViewPort, mode } = props;
   const geojson = useSelector(state => state.geojsonState.geojson);
+  const selectedFeatures = useSelector(
+    state => state.geojsonState.selectedFeatures
+  );
   const dispatch = useDispatch();
 
   const getMode = () => {
@@ -29,8 +32,6 @@ const Map = props => {
     }
   };
 
-  const [selectedFeatureIndexes, setSelectedFeatureIndexes] = useState([]);
-
   const layer = new EditableGeoJsonLayer({
     id: "geojson-layer",
     data: geojson,
@@ -40,7 +41,7 @@ const Map = props => {
     },
     autoHighlight: true,
     pickable: true,
-    selectedFeatureIndexes,
+    selectedFeatureIndexes: selectedFeatures,
     initialViewState: { latitude: 20.593683, longitude: 78.962883 },
 
     onEdit: ({ updatedData }) => {
@@ -49,7 +50,7 @@ const Map = props => {
     onClick:
       mode === "select"
         ? info => {
-            setSelectedFeatureIndexes([...selectedFeatureIndexes, info.index]);
+            dispatch(setSelectedFeatures([...selectedFeatures, info.index]));
           }
         : null
   });
