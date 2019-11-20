@@ -3,13 +3,25 @@ import Dragger from "./elements/Dragger";
 import ReactJSONView from "react-json-view";
 import { Icon, Accordion, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeoJSON } from "../actions";
+import { setGeoJSON, setSelectedFeatures } from "../actions";
 import PropertyPanel from "./elements/PropertyPanel";
 
 const LeftPane = ({ setMode }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const geojson = useSelector(state => state.geojsonState.geojson);
+  const selectedFeatures = useSelector(
+    state => state.geojsonState.selectedFeatures
+  );
+
+  const handleDelete = () => {
+    const filteredFeatures = geojson.features.filter((feature, index) => {
+      if (selectedFeatures.indexOf(index) !== -1) return false;
+      return true;
+    });
+    dispatch(setSelectedFeatures([]));
+    dispatch(setGeoJSON({ ...geojson, features: filteredFeatures }));
+  };
 
   return (
     <div>
@@ -25,7 +37,22 @@ const LeftPane = ({ setMode }) => {
           <Button onClick={() => setMode("edit")}>Edit</Button>
         </Button.Group>
       </div>
-      <PropertyPanel />
+      {selectedFeatures.length > 0 && (
+        <div>
+          <PropertyPanel />
+          <Button
+            color="red"
+            fluid
+            style={{ marginTop: 10 }}
+            onClick={handleDelete}
+            icon
+            labelPosition="right"
+          >
+            <Icon name="delete" />
+            Delete selected objects
+          </Button>
+        </div>
+      )}
       {geojson && (
         <Accordion fluid>
           <Accordion.Title active={active} onClick={() => setActive(!active)}>

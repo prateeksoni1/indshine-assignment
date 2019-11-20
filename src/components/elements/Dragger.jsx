@@ -1,6 +1,6 @@
 import React from "react";
 import FileDrop from "react-file-drop";
-import { Button, Icon } from "semantic-ui-react";
+import { Button, Icon, Label } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { setGeoJSON } from "../../actions";
 
@@ -19,13 +19,7 @@ const Dragger = () => {
   return (
     <>
       <FileDrop onDrop={onFileDrop}>
-        <Button
-          icon
-          color="google plus"
-          size="medium"
-          fluid
-          labelPosition="left"
-        >
+        <Button icon color="green" size="medium" fluid labelPosition="left">
           <Icon name="code" />
           Drop GeoJSON here
         </Button>
