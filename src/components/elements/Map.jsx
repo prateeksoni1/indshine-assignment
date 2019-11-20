@@ -61,7 +61,7 @@ const Map = props => {
               );
               dispatch(setSelectedFeatures(newArray));
             } else {
-              dispatch(setSelectedFeatures([...selectedFeatures, info.index]));
+              dispatch(setSelectedFeatures([info.index]));
             }
           }
         : null
