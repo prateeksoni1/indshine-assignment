@@ -1,16 +1,17 @@
 import React from "react";
 import FileDrop from "react-file-drop";
 import { Button, Icon } from "semantic-ui-react";
+import { useDispatch } from "react-redux";
+import { setGeoJSON } from "../../actions";
 
-const Dragger = ({ setgeojson }) => {
+const Dragger = () => {
+  const dispatch = useDispatch();
   let fileReader = new FileReader();
-
   const onFileDrop = (files, event) => {
-    console.log({ files, event });
     fileReader.onloadend = _ => {
       let json = fileReader.result;
       json = JSON.parse(json);
-      setgeojson(json);
+      dispatch(setGeoJSON(json));
     };
     fileReader.readAsText(files[0]);
   };

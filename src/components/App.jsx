@@ -13,13 +13,6 @@ const App = () => {
     longitude: 78.962883
   });
 
-  const [geojson, setgeojson] = useState({
-    type: "FeatureCollection",
-    features: []
-  });
-
-  const [properties, setProperties] = useState({});
-
   const [mode, setMode] = useState("draw");
 
   return (
@@ -27,24 +20,10 @@ const App = () => {
       <Grid>
         <GridRow style={{ padding: "10px" }}>
           <GridColumn width="4" style={{ paddingTop: "15px" }}>
-            <LeftPane
-              geojson={geojson}
-              setgeojson={setgeojson}
-              setMode={setMode}
-              properties={properties}
-              setProperties={setProperties}
-            />
+            <LeftPane setMode={setMode} />
           </GridColumn>
           <GridColumn width="12" style={{ paddingTop: "15px" }}>
-            <Map
-              viewPort={viewPort}
-              setViewPort={setViewPort}
-              geojson={geojson}
-              setgeojson={setgeojson}
-              mode={mode}
-              properties={properties}
-              setProperties={setProperties}
-            />
+            <Map viewPort={viewPort} setViewPort={setViewPort} mode={mode} />
           </GridColumn>
         </GridRow>
       </Grid>

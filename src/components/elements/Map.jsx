@@ -8,28 +8,16 @@ import {
   ModifyMode
 } from "nebula.gl";
 import { MAPBOX_ACCESS_TOKEN } from "../../config";
+import { useSelector, useDispatch } from "react-redux";
+import { setGeoJSON, setSelectedFeatures } from "../../actions";
 
 const Map = props => {
-  const {
-    geojson,
-    viewPort,
-    setViewPort,
-    setgeojson,
-    mode,
-    properties
-  } = props;
-  const [selectedFeatureIndexes, setSelectedFeatureIndexes] = useState([]);
-
-  useEffect(() => {
-    const newData = geojson;
-    selectedFeatureIndexes.forEach(index => {
-      newData.features[index].properties = {
-        ...newData.features[index].properties,
-        ...properties
-      };
-    });
-    setgeojson(newData);
-  }, [properties, selectedFeatureIndexes, geojson, setgeojson]);
+  const { viewPort, setViewPort, mode } = props;
+  const geojson = useSelector(state => state.geojsonState.geojson);
+  const selectedFeatures = useSelector(
+    state => state.geojsonState.selectedFeatures
+  );
+  const dispatch = useDispatch();
 
   const getMode = () => {
     switch (mode) {
@@ -58,25 +46,22 @@ const Map = props => {
     getFillColor: d =>
       d.properties.fillColor ? d.properties.fillColor : [0, 0, 0, 100],
     getLineWidth: d => (d.properties.width ? d.properties.width : 1),
-    selectedFeatureIndexes,
+    selectedFeatureIndexes: selectedFeatures,
     initialViewState: { latitude: 20.593683, longitude: 78.962883 },
 
     onEdit: ({ updatedData }) => {
-      setgeojson(updatedData);
+      dispatch(setGeoJSON(updatedData));
     },
     onClick:
       mode === "select"
         ? info => {
-            console.log(info);
-            if (selectedFeatureIndexes.indexOf(info.index) !== -1) {
-              let newArray = selectedFeatureIndexes;
-              newArray = newArray.filter(item => item !== info.index);
-              setSelectedFeatureIndexes(newArray);
+            if (selectedFeatures.indexOf(info.index) !== -1) {
+              let newArray = selectedFeatures.filter(
+                item => item !== info.index
+              );
+              dispatch(setSelectedFeatures(newArray));
             } else {
-              setSelectedFeatureIndexes([
-                ...selectedFeatureIndexes,
-                info.index
-              ]);
+              dispatch(setSelectedFeatures([...selectedFeatures, info.index]));
             }
           }
         : null
