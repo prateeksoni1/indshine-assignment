@@ -8,9 +8,13 @@ import {
   ModifyMode
 } from "nebula.gl";
 import { MAPBOX_ACCESS_TOKEN } from "../../config";
+import { useSelector, useDispatch } from "react-redux";
+import { setGeoJSON } from "../../actions";
 
 const Map = props => {
-  const { geojson, viewPort, setViewPort, setgeojson, mode } = props;
+  const { viewPort, setViewPort, mode } = props;
+  const geojson = useSelector(state => state.geojsonState.geojson);
+  const dispatch = useDispatch();
 
   const getMode = () => {
     switch (mode) {
@@ -40,14 +44,12 @@ const Map = props => {
     initialViewState: { latitude: 20.593683, longitude: 78.962883 },
 
     onEdit: ({ updatedData }) => {
-      setgeojson(updatedData);
+      dispatch(setGeoJSON(updatedData));
     },
     onClick:
-      mode !== "draw"
+      mode === "select"
         ? info => {
-            const features = geojson.features;
             setSelectedFeatureIndexes([...selectedFeatureIndexes, info.index]);
-            setgeojson({ ...geojson, features });
           }
         : null
   });
