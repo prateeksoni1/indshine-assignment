@@ -14,16 +14,27 @@ const App = () => {
   });
 
   const [mode, setMode] = useState("draw");
+  const [drawMode, setDrawMode] = useState("polygon");
 
   return (
     <>
       <Grid>
         <GridRow style={{ padding: "10px" }}>
           <GridColumn width="4" style={{ paddingTop: "15px" }}>
-            <LeftPane setMode={setMode} />
+            <LeftPane
+              mode={mode}
+              setMode={setMode}
+              drawMode={drawMode}
+              setDrawMode={setDrawMode}
+            />
           </GridColumn>
           <GridColumn width="12" style={{ paddingTop: "15px" }}>
-            <Map viewPort={viewPort} setViewPort={setViewPort} mode={mode} />
+            <Map
+              viewPort={viewPort}
+              setViewPort={setViewPort}
+              mode={mode}
+              drawMode={drawMode}
+            />
           </GridColumn>
         </GridRow>
       </Grid>
