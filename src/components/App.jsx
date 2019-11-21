@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Map from "./elements/Map";
 import LeftPane from "./LeftPane";
-import { Grid, GridRow, GridColumn } from "semantic-ui-react";
+import { Grid, GridColumn } from "semantic-ui-react";
 
 const App = () => {
   const [viewPort, setViewPort] = useState({
@@ -18,25 +18,23 @@ const App = () => {
 
   return (
     <>
-      <Grid>
-        <GridRow style={{ padding: "10px" }}>
-          <GridColumn width="4" style={{ paddingTop: "15px" }}>
-            <LeftPane
-              mode={mode}
-              setMode={setMode}
-              drawMode={drawMode}
-              setDrawMode={setDrawMode}
-            />
-          </GridColumn>
-          <GridColumn width="12" style={{ paddingTop: "15px" }}>
-            <Map
-              viewPort={viewPort}
-              setViewPort={setViewPort}
-              mode={mode}
-              drawMode={drawMode}
-            />
-          </GridColumn>
-        </GridRow>
+      <Grid doubling stackable columns={2} style={{ padding: "10px" }}>
+        <GridColumn width="4" style={{ paddingTop: "15px" }}>
+          <LeftPane
+            mode={mode}
+            setMode={setMode}
+            drawMode={drawMode}
+            setDrawMode={setDrawMode}
+          />
+        </GridColumn>
+        <GridColumn width="12" style={{ paddingTop: "15px" }}>
+          <Map
+            viewPort={viewPort}
+            setViewPort={setViewPort}
+            mode={mode}
+            drawMode={drawMode}
+          />
+        </GridColumn>
       </Grid>
     </>
   );

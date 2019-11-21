@@ -21,13 +21,14 @@ const Dragger = () => {
       <FileDrop onDrop={onFileDrop}>
         <Button
           icon
-          color="google plus"
-          size="medium"
-          fluid
           labelPosition="left"
+          color="google plus"
+          size="big"
+          fluid
+          style={{ cursor: "default" }}
         >
-          <Icon name="code" />
-          Drop GeoJSON here
+          <Icon name="plus add square" size="large" />
+          <div style={{ padding: 10 }}>Drop GeoJSON here</div>
         </Button>
       </FileDrop>
     </>

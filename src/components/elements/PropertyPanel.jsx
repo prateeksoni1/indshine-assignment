@@ -26,7 +26,6 @@ const PropertyPanel = () => {
       return newFeature;
     });
     dispatch(setGeoJSON({ ...geojson, features: newFeatures }));
-    console.log(geojson);
   };
 
   return (

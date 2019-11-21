@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Accordion, Button, Card, Table } from "semantic-ui-react";
+import { Card, Table } from "semantic-ui-react";
 import { length, area, getGeom } from "@turf/turf";
 
 const DisplayProps = ({ feature }) => {
