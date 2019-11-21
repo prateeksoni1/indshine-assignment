@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setGeoJSON, setSelectedFeatures } from "../actions";
 import PropertyPanel from "./elements/PropertyPanel";
 import area from "@turf/area";
+import DisplayProps from "./elements/DisplayProps";
 
 const LeftPane = ({ setMode }) => {
   const dispatch = useDispatch();
@@ -38,13 +39,13 @@ const LeftPane = ({ setMode }) => {
         </Button.Group>
       </div>
       {selectedFeatures.length > 0 && (
-        <div>
+        <div style={{ marginTop: 10 }}>
           <PropertyPanel />
-          <div>Area: {area(geojson.features[selectedFeatures[0]])}</div>
+          {console.log(geojson.features[selectedFeatures[0]])}
+          <DisplayProps feature={geojson.features[selectedFeatures[0]]} />
           <Button
             color="red"
             fluid
-            style={{ marginTop: 10 }}
             onClick={handleDelete}
             icon
             labelPosition="right"

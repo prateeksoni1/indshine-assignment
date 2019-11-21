@@ -30,7 +30,7 @@ const PropertyPanel = () => {
   };
 
   return (
-    <Card fluid>
+    <Card raised fluid>
       <Card.Content>
         <Card.Header>Properties</Card.Header>
         <Form style={{ marginTop: 10 }}>
