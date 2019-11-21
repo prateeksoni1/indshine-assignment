@@ -5,15 +5,15 @@ import { Icon, Accordion, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { setGeoJSON, setSelectedFeatures } from "../actions";
 import PropertyPanel from "./elements/PropertyPanel";
+import DisplayProps from "./elements/DisplayProps";
 
-const LeftPane = ({ setMode }) => {
+const LeftPane = ({ mode, setMode, drawMode, setDrawMode }) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const geojson = useSelector(state => state.geojsonState.geojson);
   const selectedFeatures = useSelector(
     state => state.geojsonState.selectedFeatures
   );
-
   const handleDelete = () => {
     const filteredFeatures = geojson.features.filter((feature, index) => {
       if (selectedFeatures.indexOf(index) !== -1) return false;
@@ -30,20 +30,55 @@ const LeftPane = ({ setMode }) => {
       </div>
       <div style={{ marginTop: 10 }}>
         <Button.Group fluid>
-          <Button onClick={() => setMode("draw")}>Draw</Button>
+          <Button onClick={() => setMode("draw")} active={mode === "draw"}>
+            Draw
+          </Button>
           <Button.Or />
-          <Button onClick={() => setMode("select")}>Select</Button>
+          <Button onClick={() => setMode("select")} active={mode === "select"}>
+            Select
+          </Button>
           <Button.Or />
-          <Button onClick={() => setMode("edit")}>Edit</Button>
+          <Button onClick={() => setMode("edit")} active={mode === "edit"}>
+            Edit
+          </Button>
         </Button.Group>
       </div>
+
+      {mode === "draw" && (
+        <div style={{ marginTop: 10 }}>
+          <Button.Group fluid>
+            <Button
+              onClick={() => setDrawMode("polygon")}
+              active={drawMode === "polygon"}
+            >
+              Polygon
+            </Button>
+            <Button.Or />
+            <Button
+              onClick={() => setDrawMode("line")}
+              active={drawMode === "line"}
+            >
+              Line String
+            </Button>
+            <Button.Or />
+            <Button
+              onClick={() => setDrawMode("point")}
+              active={drawMode === "point"}
+            >
+              Point
+            </Button>
+          </Button.Group>
+        </div>
+      )}
+
       {selectedFeatures.length > 0 && (
-        <div>
+        <div style={{ marginTop: 10 }}>
           <PropertyPanel />
+          {console.log(geojson.features[selectedFeatures[0]])}
+          <DisplayProps feature={geojson.features[selectedFeatures[0]]} />
           <Button
             color="red"
             fluid
-            style={{ marginTop: 10 }}
             onClick={handleDelete}
             icon
             labelPosition="right"
